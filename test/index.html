@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Dress Shop</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="sass/style.scss">
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Navbar -->
+  <ul class="nav justify-content-center mb-4 border position-sticky ">
+    <li class="nav-item"><a class="nav-link active  text-black" href="index.html">Home</a></li>
+    <li class="nav-item"><a class="nav-link  text-black" href="#products">Products</a></li>
+    <li class="nav-item"><a class="nav-link  text-black" href="#total">Payment</a></li>
+    <li class="nav-item"><a class="nav-link  text-black" href="#">Footer</a></li>
+  </ul>
+
+  <!-- Carousel -->
+  <div id="carouselExampleIndicators" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"></button>
+    </div>
+    <div class="carousel-inner" >
+      <div class="carousel-item active"><img src="pic/Blog Header.png" alt=""></div>
+      <div class="carousel-item"><img src="pic/tamam.webp" alt=""></div>
+      <div class="carousel-item"><img src="pic/8.jpg" alt=""></div>
+      <div class="carousel-item"><img src="pic/SaintBridalCouture_NewRealm_WeddingGown_Marie_171-132e837593d14b07bb2be9cbe56bba7e.jpg" alt=""></div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Products Table -->
+  <div class="section">
+    <h2 class="text-center">Available Wedding Dresses</h2>
+    <table id="productTable" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price (Toman)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Cart Table -->
+  <div class="section" id="products">
+    <h2 class=" text-center">Purchased Products</h2>
+    <table id="cartTable" class="table table-striped">
+      <thead>
+        <tr id="total">
+          <th>Product</th>
+          <th>Price</th>
+          <th>Discount</th>
+          <th>Final Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3">Total</td>
+          <td id="totalCell">0</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+ 
+<footer class="p-5  border  text-center">
+    <h2>nice too see you</h2><i class="fa-brands fa-instagram"></i>
+    <i class="fa-brands fa-facebook text-dark" ></i>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const products = [
+    { name: "Elegant Lace Dress", price: 1200000 },
+    { name: "Classic White Gown", price: 1500000 },
+    { name: "Royal Satin Dress", price: 1800000 },
+    { name: "Modern Mermaid Dress", price: 1300000 },
+    { name: "Princess Style Gown", price: 1600000 },
+    { name: "Simple Chic Dress", price: 1000000 }
+  ];
+
+  const discountRate = 0.1;
+  const productTableBody = document.querySelector("#productTable tbody");
+  const cartTableBody = document.querySelector("#cartTable tbody");
+  const totalCell = document.getElementById("totalCell");
+
+  // Render product table
+  products.forEach((p, i) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${p.name}</td>
+      <td>${p.price.toLocaleString()}</td>
+      <td><button class="table-btn" onclick="addToCart(${i})">Add to Cart</button></td>
+    `;
+    productTableBody.appendChild(row);
+  });
+
+  function addToCart(index) {
+    const product = products[index];
+    const discount = product.price * discountRate;
+    const finalPrice = product.price - discount;
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${product.name}</td>
+      <td>${product.price.toLocaleString()}</td>
+      <td>${discount.toLocaleString()}</td>
+      <td class="final">${finalPrice.toLocaleString()}</td>
+    `;
+
+    const tdDelete = document.createElement("td");
+    const btn = document.createElement("button");
+    btn.textContent = "Delete";
+    btn.className = "table-btn";
+    btn.onclick = () => {
+      row.remove();
+      updateTotal();
+    };
+    tdDelete.appendChild(btn);
+    row.appendChild(tdDelete);
+
+    cartTableBody.appendChild(row);
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const finalCells = document.querySelectorAll("#cartTable .final");
+    let total = 0;
+    finalCells.forEach(cell => {
+      total += parseFloat(cell.textContent.replace(/,/g, ""));
+    });
+    totalCell.textContent = total.toLocaleString();
+  }
+</script>
+
+</body>
+</html>

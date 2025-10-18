@@ -1,0 +1,45 @@
+/* Tables */
+#productTable,
+#cartTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#productTable th,
+#productTable td,
+#cartTable th,
+#cartTable td {
+  border: 1px solid $border-color;
+  text-align: center;
+  padding: 8px;
+}
+
+#productTable th,
+#cartTable th {
+  background-color: #f0f0f0;
+}
+
+#cartTable tfoot td {
+  font-weight: bold;
+  background-color: #f8f8f8;
+}
+
+/* Buttons */
+.table-btn {
+  background-color: $btn-bg;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $btn-hover-bg;
+  }
+}
+
+/* Section spacing */
+.section {
+  margin-bottom: 50px;
+}

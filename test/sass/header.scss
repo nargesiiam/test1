@@ -1,0 +1,16 @@
+body {
+  background-color: $bg-color;
+  font-family: sans-serif;
+  padding-top: 20px;
+}
+
+h2 {
+  margin: 25px 0 15px;
+}
+
+/* Carousel images unchanged */
+.carousel-inner img {
+  width: 100%;
+  height: 90vh;
+  object-fit: cover;
+}
